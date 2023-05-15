@@ -6,11 +6,11 @@ from selenium.webdriver.common.by import By
 
 class LoginPage(BasePage):
     @allure.step('Выбор авторизации клиентов')
-    def select_customer_login(self):
+    def select_customer_login(self) -> None:
         self.wait_clickable_element(BankingProjectLoginPage.button_customer_login).click()
 
     @allure.step('Выбор пользователя по имени из выпадающего списка')
-    def select_user_by_name(self, name: str):
+    def select_user_by_name(self, name: str) -> None:
         """
         Выбор пользователя из выпадающего списка
         :param name: Имя пользователя
@@ -19,11 +19,11 @@ class LoginPage(BasePage):
         self.wait_clickable_element((By.XPATH, f'//option[contains(text(), "{name}")]')).click()
 
     @allure.step('Подтверждения авторизации')
-    def submit_login(self):
+    def submit_login(self) -> None:
         self.wait_element_present(BankingProjectCustomerPage.button_login).click()
 
     @allure.step('Авторизация пользователя по имени')
-    def login_customer_user_by_name(self, name: str):
+    def login_customer_user_by_name(self, name: str) -> None:
         """
         1) Выбрать авторизацию для клиентов;
         2) Выбрать пользователя из выпадающего списка;
