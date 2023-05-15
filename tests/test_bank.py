@@ -1,6 +1,9 @@
 import time
 import allure
 from .page.login_page import LoginPage
+from .page.user_page import UserPage
+from .page.generate_date import generate_fibonacci_number
+from hamcrest import assert_that, equal_to
 
 
 @allure.title('Проверка работы финансовых операций "Harry Potter"')
@@ -22,6 +25,12 @@ def test_transactions_customer_user(browser):
         10) Оформить сформированный файл как вложение к отчету allure.
     """
     page = LoginPage(browser)
-    page = LoginPage(browser)
     page.open_page('https://www.globalsqa.com/angularJs-protractor/BankingProject/#/login')
     page.login_customer_user_by_name('Harry Potter')
+
+    page = UserPage(browser)
+    n = generate_fibonacci_number(10)
+    page.deposit_account(n)
+    page.withdrawl_account(n)
+    assert_that(page.get_balance(), equal_to('0'))
+
