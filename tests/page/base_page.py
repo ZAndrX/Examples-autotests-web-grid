@@ -37,3 +37,14 @@ class BasePage:
         :return: Элемент найденный по локатору на странице
         """
         return Wait(self.browser, timeout).until(expected_conditions.presence_of_element_located(locator))
+
+    def get_text(self, locator: tuple[str, str], timeout: int = 5) -> str:
+        """
+        Получение текста элемента
+        :param locator: Локатор элемента
+        :param timeout: Максимальное время ожидания появления элемента
+        :return: Текст элемента
+        """
+        el = self.wait_element_present(locator)
+        return el.text
+
