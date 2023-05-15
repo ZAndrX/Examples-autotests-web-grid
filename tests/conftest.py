@@ -19,15 +19,13 @@ def browser(request):
     browser_version = request.config.getoption("browser_version")
     fib = int(request.config.getoption("fib"))
     url = request.config.getoption("url")
-    capabilities = {
-        "browserName": browser_name,
-        "browserVersion": browser_version
-    }
+    options = webdriver.ChromeOptions()
+    options.set_capability("browserName", browser_name)
+    options.set_capability("browserVersion", browser_version)
     browser = webdriver.Remote(
         command_executor=f'{url}/wd/hub',
-        desired_capabilities=capabilities
+        options=options
     )
 
     yield browser, fib
-    browser.close()
     browser.quit()
