@@ -1,10 +1,8 @@
 import allure
-import csv
 from selenium import webdriver
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.ui import WebDriverWait as Wait
 from selenium.webdriver.remote.webdriver import WebElement
-from io import StringIO
 
 
 class BasePage:
@@ -76,17 +74,3 @@ class BasePage:
                 tmp_result[headers[j]] = row[j].text
             result.append(tmp_result)
         return result
-
-    @allure.step('Прикрепление csv файла')
-    def attach_table(self, table_dict: list[dict], name_file: str) -> None:
-        """
-        Прикрепление csv файла
-        :param table_dict: Словарь с данными таблицы table_to_dict
-        :param name_file: Имя файла
-        """
-        csv_content = StringIO()
-        writer = csv.DictWriter(csv_content, fieldnames=table_dict[0].keys())
-        writer.writeheader()
-        for line in table_dict:
-            writer.writerow(line)
-        allure.attach(csv_content.getvalue(), name=name_file, attachment_type=allure.attachment_type.CSV)

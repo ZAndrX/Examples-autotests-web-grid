@@ -1,4 +1,3 @@
-import time
 import allure
 from .page.login_page import LoginPage
 from .page.user_page import UserPage
@@ -24,13 +23,18 @@ def test_transactions_customer_user(browser):
         9) Сформировать файл формата csv, в который выгрузить данные о проведенных транзакциях;
         10) Оформить сформированный файл как вложение к отчету allure.
     """
+    browser, n = browser
     page = LoginPage(browser)
     page.open_page('https://www.globalsqa.com/angularJs-protractor/BankingProject/#/login')
     page.login_customer_user_by_name('Harry Potter')
 
     page = UserPage(browser)
-    n = generate_fibonacci_number(10)
-    page.deposit_account(n)
-    page.withdrawl_account(n)
+    fib = generate_fibonacci_number(n)
+    page.deposit_account(fib)
+    page.withdrawl_account(fib)
     assert_that(page.get_balance(), equal_to('0'))
 
+    transactions = page.get_table_transactions()
+    page.transactions_is_present(transactions, fib)
+
+    page.attach_transactions(name_file='transactions.csv', table_dict=transactions)
