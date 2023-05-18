@@ -1,5 +1,6 @@
 import pytest
 from selenium import webdriver
+from .tools.generate_date import generate_fibonacci_number
 
 
 def pytest_addoption(parser):
@@ -14,10 +15,15 @@ def pytest_addoption(parser):
 
 
 @pytest.fixture(scope="function")
+def get_fib(request):
+    fib = int(request.config.getoption("fib"))
+    return generate_fibonacci_number(fib)
+
+
+@pytest.fixture(scope="function")
 def browser(request):
     browser_name = request.config.getoption("browser_name")
     browser_version = request.config.getoption("browser_version")
-    fib = int(request.config.getoption("fib"))
     url = request.config.getoption("url")
     options = webdriver.ChromeOptions()
     options.set_capability("browserName", browser_name)
@@ -27,5 +33,5 @@ def browser(request):
         options=options
     )
 
-    yield browser, fib
+    yield browser
     browser.quit()

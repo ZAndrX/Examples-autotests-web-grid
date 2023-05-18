@@ -6,7 +6,7 @@ from hamcrest import assert_that, equal_to
 
 
 @allure.title('Проверка работы финансовых операций "Harry Potter"')
-def test_transactions_customer_user(browser):
+def test_transactions_customer_user(browser, get_fib):
     """
         1) Использовать Python/Java, подключить библиотеку Selenium Webdriver;
         2) С помощью Selenium открыть браузер, открыть страницу страницу
@@ -23,18 +23,16 @@ def test_transactions_customer_user(browser):
         9) Сформировать файл формата csv, в который выгрузить данные о проведенных транзакциях;
         10) Оформить сформированный файл как вложение к отчету allure.
     """
-    browser, n = browser
     page = LoginPage(browser)
     page.open_page('https://www.globalsqa.com/angularJs-protractor/BankingProject/#/login')
     page.login_customer_user_by_name('Harry Potter')
 
     page = UserPage(browser)
-    fib = generate_fibonacci_number(n)
-    page.deposit_account(fib)
-    page.withdrawl_account(fib)
+    page.deposit_account(get_fib)
+    page.withdrawl_account(get_fib)
     assert_that(page.get_balance(), equal_to('0'))
 
     transactions = page.get_table_transactions()
-    page.transactions_is_present(transactions, fib)
+    page.transactions_is_present(transactions, get_fib)
 
     page.attach_transactions(name_file='transactions.csv', table_dict=transactions)
