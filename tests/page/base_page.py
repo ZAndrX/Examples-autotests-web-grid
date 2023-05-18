@@ -51,7 +51,8 @@ class BasePage:
         return el.text
 
     @allure.step('Преобразование таблицы в словарь')
-    def table_to_dict(self, locator_table: tuple[str, str], locator_headers: tuple[str, str], number_first_line: int = 1) -> list[dict]:
+    def table_to_dict(self, locator_table: tuple[str, str], locator_headers: tuple[str, str],
+                      number_first_line: int = 1) -> list[dict]:
         """
         Преобразование таблицы на страницы в словарь
         :param locator_table: Локатор таблицы
@@ -66,9 +67,9 @@ class BasePage:
             headers.append(header_element.text)
 
         result = []
-        lines = self.browser.find_elements(locator_table[0], locator_table[1]+">tbody>tr")
-        for i in range(number_first_line-1, len(lines)):
-            row = self.browser.find_elements(locator_table[0], f"{locator_table[1]}>tbody>tr:nth-child({i+1})>td")
+        lines = self.browser.find_elements(locator_table[0], locator_table[1] + ">tbody>tr")
+        for i in range(number_first_line - 1, len(lines)):
+            row = self.browser.find_elements(locator_table[0], f"{locator_table[1]}>tbody>tr:nth-child({i + 1})>td")
             tmp_result = {}
             for j in range(len(headers)):
                 tmp_result[headers[j]] = row[j].text

@@ -1,7 +1,6 @@
 import allure
 from .page.login_page import LoginPage
 from .page.user_page import UserPage
-from .tools.generate_date import generate_fibonacci_number
 from hamcrest import assert_that, equal_to
 
 
