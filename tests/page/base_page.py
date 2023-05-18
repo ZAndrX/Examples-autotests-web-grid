@@ -74,3 +74,20 @@ class BasePage:
                 tmp_result[headers[j]] = row[j].text
             result.append(tmp_result)
         return result
+
+    @allure.step('Поиск по словарю значений в table_dict')
+    def search_in_table_dict(self, table_dict, regex_dict):
+        result = []
+        for line_dict in table_dict:
+            is_match = True
+            for key_regex, value_regex in regex_dict.items():
+                try:
+                    if line_dict[key_regex] != value_regex:
+                        is_match = False
+                        break
+                except KeyError:
+                    is_match = False
+                    break
+            if is_match:
+                result.append(line_dict)
+        return result

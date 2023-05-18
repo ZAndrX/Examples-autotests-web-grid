@@ -4,7 +4,7 @@ from selenium.common import StaleElementReferenceException
 from .base_page import BasePage
 from .locators import BankingProjectAccount, BankingProjectTransactions
 from hamcrest import assert_that, equal_to
-from .table import search_in_table_dict, attach_table
+from ..tools.allure import attach_table
 
 
 class UserPage(BasePage):
@@ -98,7 +98,7 @@ class UserPage(BasePage):
         :param table_dict: Словарь с данными таблицы table_to_dict
         :param n: Количество единиц в операциях
         """
-        deposit_list = search_in_table_dict(table_dict=table_dict, regex_dict={'Amount': str(n), 'Transaction Type': 'Debit'})
-        withdrawl_list = search_in_table_dict(table_dict=table_dict, regex_dict={'Amount': str(n), 'Transaction Type': 'Credit'})
+        deposit_list = self.search_in_table_dict(table_dict=table_dict, regex_dict={'Amount': str(n), 'Transaction Type': 'Debit'})
+        withdrawl_list = self.search_in_table_dict(table_dict=table_dict, regex_dict={'Amount': str(n), 'Transaction Type': 'Credit'})
         assert_that(len(deposit_list), equal_to(1))
         assert_that(len(withdrawl_list), equal_to(1))
