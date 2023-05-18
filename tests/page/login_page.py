@@ -16,7 +16,7 @@ class LoginPage(BasePage):
         :param name: Имя пользователя
         """
         self.wait_clickable_element(BankingProjectCustomerPage.form_select_user).click()
-        self.wait_clickable_element((By.XPATH, f'//option[contains(text(), "{name}")]')).click()
+        self.wait_clickable_element(BankingProjectCustomerPage(name).option_user_from_dropdown).click()
 
     @allure.step('Подтверждения авторизации')
     def submit_login(self) -> None:
