@@ -1,6 +1,4 @@
-import time
 import allure
-from selenium.common import StaleElementReferenceException
 from .base_page import BasePage
 from .locators import BankingProjectAccount, BankingProjectTransactions
 from hamcrest import assert_that, equal_to
@@ -22,21 +20,19 @@ class UserPage(BasePage):
 
     @allure.step('Ввод количества единиц для депозита')
     def input_amount_deposit(self, n: int) -> None:
-        self.wait_clickable_element(BankingProjectAccount.input_deposit).send_keys(str(n))
+        self.wait_clickable_element(BankingProjectAccount.Deposit.input_amount).send_keys(str(n))
 
     @allure.step('Ввод количества единиц для вывода')
     def input_amount_withdrawl(self, n: int) -> None:
-        self.wait_clickable_element(BankingProjectAccount.input_withdrawl).send_keys(str(n))
+        self.wait_clickable_element(BankingProjectAccount.Withdrawl.input_amount).send_keys(str(n))
 
-    @allure.step('Подтверждение операции')
-    def submit_transaction(self) -> None:
-        while True:
-            try:
-                el = self.wait_clickable_element(BankingProjectAccount.button_submit)
-                el.click()
-                break
-            except StaleElementReferenceException:
-                time.sleep(1)
+    @allure.step('Подтверждение операции депозита')
+    def submit_transaction_deposit(self) -> None:
+        self.wait_clickable_element(BankingProjectAccount.Deposit.button_submit).click()
+
+    @allure.step('Подтверждение операции вывода')
+    def submit_transaction_withdrawl(self) -> None:
+        self.wait_clickable_element(BankingProjectAccount.Withdrawl.button_submit).click()
 
     @allure.step('Пополнение счета пользователя')
     def deposit_account(self, n: int) -> None:
@@ -47,7 +43,7 @@ class UserPage(BasePage):
         """
         self.select_deposit()
         self.input_amount_deposit(n)
-        self.submit_transaction()
+        self.submit_transaction_deposit()
         self.select_deposit()
 
     @allure.step('Вывод со счета пользователя')
@@ -59,7 +55,7 @@ class UserPage(BasePage):
         """
         self.select_withdrawl()
         self.input_amount_withdrawl(n)
-        self.submit_transaction()
+        self.submit_transaction_withdrawl()
         self.select_withdrawl()
 
     @allure.step('Получение единиц баланса')

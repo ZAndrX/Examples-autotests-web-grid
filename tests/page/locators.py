@@ -17,11 +17,17 @@ class BankingProjectCustomerPage:
 class BankingProjectAccount:
     balance = (By.CSS_SELECTOR, '.center>strong:nth-child(2)')
     button_transactions = (By.CSS_SELECTOR, 'button[ng-click="transactions()"]')
+
     button_deposit = (By.CSS_SELECTOR, 'button[ng-click="deposit()"]')
     button_withdrawl = (By.CSS_SELECTOR, 'button[ng-click="withdrawl()"]')
-    input_deposit = (By.CSS_SELECTOR, 'form[ng-submit="deposit()"]>div>input')
-    input_withdrawl = (By.CSS_SELECTOR, 'form[ng-submit="withdrawl()"]>div>input')
-    button_submit = (By.CSS_SELECTOR, 'button[type="submit"]')
+
+    class Deposit:
+        input_amount = (By.CSS_SELECTOR, 'form[ng-submit="deposit()"]>div>input')
+        button_submit = (By.CSS_SELECTOR, 'form[ng-submit="deposit()"]>button[type="submit"]')
+
+    class Withdrawl:
+        input_amount = (By.CSS_SELECTOR, 'form[ng-submit="withdrawl()"]>div>input')
+        button_submit = (By.CSS_SELECTOR, 'form[ng-submit="withdrawl()"]>button[type="submit"]')
 
 
 class BankingProjectTransactions:
