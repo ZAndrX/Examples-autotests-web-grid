@@ -20,16 +20,13 @@ class UserPage(BasePage):
     def select_transactions(self) -> None:
         self.wait_clickable_element(BankingProjectAccount.button_transactions).click()
 
-    @allure.step('Ввод количества единиц для операции')
-    def input_amount(self, n: int) -> None:
-        time.sleep(1)
-        while True:
-            try:
-                el = self.wait_clickable_element(BankingProjectAccount.input)
-                el.send_keys(str(n))
-                break
-            except StaleElementReferenceException:
-                time.sleep(1)
+    @allure.step('Ввод количества единиц для депозита')
+    def input_amount_deposit(self, n: int) -> None:
+        self.wait_clickable_element(BankingProjectAccount.input_deposit).send_keys(str(n))
+
+    @allure.step('Ввод количества единиц для вывода')
+    def input_amount_withdrawl(self, n: int) -> None:
+        self.wait_clickable_element(BankingProjectAccount.input_withdrawl).send_keys(str(n))
 
     @allure.step('Подтверждение операции')
     def submit_transaction(self) -> None:
@@ -49,7 +46,7 @@ class UserPage(BasePage):
         :return:
         """
         self.select_deposit()
-        self.input_amount(n)
+        self.input_amount_deposit(n)
         self.submit_transaction()
         self.select_deposit()
 
@@ -61,7 +58,7 @@ class UserPage(BasePage):
         :return:
         """
         self.select_withdrawl()
-        self.input_amount(n)
+        self.input_amount_withdrawl(n)
         self.submit_transaction()
         self.select_withdrawl()
 

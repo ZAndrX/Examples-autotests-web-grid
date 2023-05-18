@@ -19,7 +19,8 @@ class BankingProjectAccount:
     button_transactions = (By.CSS_SELECTOR, 'button[ng-click="transactions()"]')
     button_deposit = (By.CSS_SELECTOR, 'button[ng-click="deposit()"]')
     button_withdrawl = (By.CSS_SELECTOR, 'button[ng-click="withdrawl()"]')
-    input = (By.CSS_SELECTOR, 'input[type="number"]')
+    input_deposit = (By.CSS_SELECTOR, 'form[ng-submit="deposit()"]>div>input')
+    input_withdrawl = (By.CSS_SELECTOR, 'form[ng-submit="withdrawl()"]>div>input')
     button_submit = (By.CSS_SELECTOR, 'button[type="submit"]')
 
 
